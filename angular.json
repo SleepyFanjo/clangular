@@ -11,28 +11,28 @@
         }
       },
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "front",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/clangular",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "index": "front/index.html",
+            "main": "front/main.ts",
+            "polyfills": "front/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "assets": ["front/favicon.ico", "front/assets"],
+            "styles": ["front/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "front/environments/environment.ts",
+                  "with": "front/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -78,12 +78,12 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "main": "front/test.ts",
+            "polyfills": "front/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "assets": ["front/favicon.ico", "front/assets"],
+            "styles": ["front/styles.scss"],
             "scripts": []
           }
         },
