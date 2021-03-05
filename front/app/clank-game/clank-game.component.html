@@ -1,9 +1,7 @@
 <p>clank-game works!</p>
 <div>Let's try to print the board shall we ?!</div>
-<div *ngFor="let row of board.getTiles(); let i = index">
-    <div *ngFor="let col of row; let j = index" class="inline box" (click)="canAccessTo(col)">
-        {{col}}
-    </div>
+<div *ngFor="let row of board.getTiles(); let i = index" [ngClass]="{inline:true, box:true, canStep: row.canStepIn}" (click)="canAccessTo(row.value)" id="tile_{{i}}">
+        {{row.value}}
 </div>
 
 <div>And the access matrix associated</div>

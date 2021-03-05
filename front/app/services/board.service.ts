@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BoardModel } from '../models/board.model';
+import { TileModel } from '../models/tile.model';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,10 @@ export class BoardService {
 
     createBoard(): BoardService {
         let tiles = [
-            [0,1,2,3]
+            new TileModel({value:0, canStepIn: false}),
+            new TileModel({value:1, canStepIn: false}),
+            new TileModel({value:2, canStepIn: false}),
+            new TileModel({value:3, canStepIn: false})
         ];
 
         let tilesAccess = [ //   |0|1|2|3|
@@ -43,10 +47,17 @@ export class BoardService {
 
         for (let index = 0; index < matrix[origin].length; index++) {
             if (matrix[origin][index] === 1) {
-                result.push(index);
+                result.push(this.board.getTiles()[index]);
+                this.board.setTilecanStepInProperty(index, true);
             }        
         }
 
         return result;
+    }
+
+    resetCanStepIn(): void {
+        for (let index = 0; index < this.board.getTiles().length; index++) {
+            this.board.setTilecanStepInProperty(index, false);
+        }
     }
 }

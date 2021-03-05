@@ -14,7 +14,6 @@ public board: BoardModel;
   constructor(private boardService: BoardService) {
     this.createBoard();
     this.board = this.getBoard();
-    console.log(this.board.getTiles());
   }
 
   ngOnInit(): void {
@@ -22,8 +21,8 @@ public board: BoardModel;
   }
 
   canAccessTo(origin: number) {
-    console.log(origin);
-    console.log(this.boardService.canAccessTo(origin));
+    this.boardService.resetCanStepIn();
+    let result = this.boardService.canAccessTo(origin);
   }
 
   createBoard(): ClankGameComponent {
