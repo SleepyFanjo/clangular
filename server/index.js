@@ -3,6 +3,7 @@
 const WebSocketServer = require("websocket").server;
 const http = require("http");
 const User = require("../models/User");
+const Room = require("../models/Room");
 
 let users = [];
 
@@ -44,8 +45,6 @@ wsServer.on("request", function (request) {
   const user = new User(connection);
 
   users.push(user);
-  console.log(users);
-
   connection.on("message", function (message) {
     if (message.type === "utf8") {
       handleMessage(JSON.parse(message.utf8Data), user);
