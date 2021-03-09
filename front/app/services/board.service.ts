@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BoardModel } from '../models/board.model';
 import { TileModel } from '../models/tile.model';
+import { AppConstants } from '../app.constants';
 
 @Injectable({
     providedIn: 'root'
@@ -17,11 +18,11 @@ export class BoardService {
             new TileModel({value:3, canStepIn: false})
         ];
 
-        let tilesAccess = [ //   |0|1|2|3|
-            [0,1,0,0],      //  0|0|1|0|0|
-            [1,0,1,0],      //  1|1|0|1|0|
-            [0,1,0,1],      //  2|0|1|0|1|
-            [0,1,1,0]       //  3|0|1|1|0|
+        let tilesAccess = [                                         //   |0|1|2|3|
+            [0,AppConstants.CAN_PASS,0,0],                          //  0|0|1|0|0|
+            [AppConstants.CAN_PASS,0,AppConstants.CAN_PASS,0],      //  1|1|0|1|0|
+            [0,AppConstants.CAN_PASS,0,AppConstants.CAN_PASS],      //  2|0|1|0|1|
+            [0,AppConstants.CAN_PASS,AppConstants.CAN_PASS,0]       //  3|0|1|1|0|
         ];
 
         let board = new BoardModel({

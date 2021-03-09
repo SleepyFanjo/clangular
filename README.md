@@ -2,9 +2,15 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
 
+For this projet, you will need node for NPM : https://www.npmjs.com/get-npm
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Once you got npm, you can install angular globaly by running `npm install -g @angular/cli` or localy by running `npm install @angular/cli`
+
+After, you can clone the projet using `git clone`.
+
+Then, you just have to run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
