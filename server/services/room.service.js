@@ -6,29 +6,56 @@ class RoomService {
     this.rooms = [];
   }
 
+  createRoom = (user) => {
+    const room = new Room();
+    room.addUser(user);
+
+    this.rooms.push(room);
+
+    return {
+      type: actions.USER_CREATED_ROOM,
+      roomId: room.id,
+    };
+  };
+
   joinRoom = (user, roomId) => {
     const room = this.getRoomById(roomId);
 
     if (!room) {
-      throw new Error("Room doesn't exist");
+      return {
+        type: actions.USER_JOIN_ROOM_FAILED,
+        error: "Cette salle n'existe pas",
+      };
     }
 
     room.addUser(user);
+
     return {
       type: actions.USER_JOINED_ROOM,
       users: room.users.map((u) => u.name),
     };
   };
 
-  createRoom = (user) => {
-    const room = new Room();
-    room.addUser(user);
+  leaveRoom = (user) => {
+    const room = this.getRoomByUser(user);
 
-    this.rooms.push(room);
-    return {
-      type: actions.USER_CREATED_ROOM,
-      roomId: room.id,
-    };
+    if (!room) {
+      return;
+    }
+
+    const usersCount = room.removeUser(user);
+
+    if (usersCount <= 0) {
+      this.clearRoom(room);
+    }
+  };
+
+  clearRoom = (room) => {
+    this.rooms = this.rooms.filter((r) => r.id !== room.id);
+  };
+
+  getRoomByUser = (user) => {
+    return this.rooms.find((r) => r.hasUser(user));
   };
 
   getRoomById = (roomId) => {

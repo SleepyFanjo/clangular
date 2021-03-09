@@ -13,7 +13,13 @@ class Room {
   };
 
   removeUser = (user) => {
-    this.users.filter((u) => u.connection !== user.connection);
+    this.users = this.users.filter((u) => u.connection !== user.connection);
+
+    return this.users.length;
+  };
+
+  hasUser = (user) => {
+    return this.users.find((u) => u.connection === user.connection);
   };
 }
 

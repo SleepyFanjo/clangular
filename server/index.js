@@ -4,8 +4,7 @@ const WebSocketServer = require("websocket").server;
 const http = require("http");
 const User = require("../models/User");
 const messageService = require("./services/message.service");
-
-let users = [];
+const userService = require("./services/user.service");
 
 const server = http.createServer(function (request, response) {
   console.log(new Date() + " Received request for " + request.url);
@@ -44,20 +43,18 @@ wsServer.on("request", function (request) {
   const connection = request.accept("echo-protocol", request.origin);
   const user = new User(connection);
 
-  users.push(user);
+  userService.addUser(user);
+
   connection.on("message", function (message) {
-    if (message.type === "utf8") {
+    if (message.type === "utf8" && user.name) {
       messageService.handleMessage(JSON.parse(message.utf8Data), user);
-    } else if (message.type === "binary") {
-      console.log(
-        "Received Binary Message of " + message.binaryData.length + " bytes"
-      );
+    } else if (message.type === "utf8") {
+      userService.handleMessage(JSON.parse(message.utf8Data), user);
     }
   });
 
   connection.on("close", function (reasonCode, description) {
-    users = users.filter((user) => user.connection !== connection);
-    console.log(users);
+    userService.removeUser(user);
     console.log(
       new Date() + " Peer " + connection.remoteAddress + " disconnected."
     );
