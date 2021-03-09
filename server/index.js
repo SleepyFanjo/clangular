@@ -3,7 +3,7 @@
 const WebSocketServer = require("websocket").server;
 const http = require("http");
 const User = require("../models/User");
-const Room = require("../models/Room");
+const messageService = require("./services/message.service");
 
 let users = [];
 
@@ -47,7 +47,7 @@ wsServer.on("request", function (request) {
   users.push(user);
   connection.on("message", function (message) {
     if (message.type === "utf8") {
-      handleMessage(JSON.parse(message.utf8Data), user);
+      messageService.handleMessage(JSON.parse(message.utf8Data), user);
     } else if (message.type === "binary") {
       console.log(
         "Received Binary Message of " + message.binaryData.length + " bytes"

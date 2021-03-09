@@ -6,8 +6,6 @@ class Room {
     this.id = randomCapitalString(5);
     this.users = [];
     this.game = new Game();
-
-    console.log(this.id);
   }
 
   addUser = (user) => {
