@@ -11,23 +11,9 @@ export class BoardService {
     board: BoardModel;
 
     createBoard(): BoardService {
-        let tiles = [
-            new TileModel({value:0, canStepIn: false}),
-            new TileModel({value:1, canStepIn: false}),
-            new TileModel({value:2, canStepIn: false}),
-            new TileModel({value:3, canStepIn: false})
-        ];
-
-        let tilesAccess = [                                         //   |0|1|2|3|
-            [0,AppConstants.CAN_PASS,0,0],                          //  0|0|1|0|0|
-            [AppConstants.CAN_PASS,0,AppConstants.CAN_PASS,0],      //  1|1|0|1|0|
-            [0,AppConstants.CAN_PASS,0,AppConstants.CAN_PASS],      //  2|0|1|0|1|
-            [0,AppConstants.CAN_PASS,AppConstants.CAN_PASS,0]       //  3|0|1|1|0|
-        ];
-
         let board = new BoardModel({
-            tiles: tiles,
-            tilesAccess: tilesAccess,
+            tiles: AppConstants.BASIC_FIELD,
+            tilesAccess: AppConstants.BASIC_FIELD_ACCESS_MATRIX,
             treasures: [],
             dragonState: 'sleeping'
         });

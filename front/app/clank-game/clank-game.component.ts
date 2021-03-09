@@ -20,9 +20,18 @@ public board: BoardModel;
     
   }
 
+  selectTile(origin: number) {
+    // Need to find a way to reset when we click on the tile again... Or somewhere else, i don't know
+    this.canAccessTo(origin);
+  }
+
   canAccessTo(origin: number) {
     this.boardService.resetCanStepIn();
-    let result = this.boardService.canAccessTo(origin);
+    this.boardService.canAccessTo(origin);
+  }
+
+  resetBoardAccess() {
+    this.boardService.resetCanStepIn();
   }
 
   createBoard(): ClankGameComponent {
