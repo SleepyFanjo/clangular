@@ -5,9 +5,10 @@ class MessageService {
   constructor() {}
 
   handleMessage = (message, user) => {
-    console.log(message);
     const result = this.handleAction(message, user);
-    console.log(result);
+    if (result && result.type) {
+      this.sendMessageToUser(result, user);
+    }
   };
 
   handleAction = (message, user) => {

@@ -1,4 +1,5 @@
 const Room = require("../../models/Room");
+const actions = require("../consts/actions");
 
 class RoomService {
   constructor() {
@@ -13,8 +14,10 @@ class RoomService {
     }
 
     room.addUser(user);
-    console.log(this.rooms);
-    return true;
+    return {
+      type: actions.USER_JOINED_ROOM,
+      users: room.users.map((u) => u.name),
+    };
   };
 
   createRoom = (user) => {
@@ -22,8 +25,10 @@ class RoomService {
     room.addUser(user);
 
     this.rooms.push(room);
-    console.log(this.rooms);
-    return room.id;
+    return {
+      type: actions.USER_CREATED_ROOM,
+      roomId: room.id,
+    };
   };
 
   getRoomById = (roomId) => {
