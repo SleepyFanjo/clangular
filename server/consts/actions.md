@@ -4,7 +4,7 @@
   - Permet à l'utilisateur de set son pseudo
   - Input : `{type: 'USER_SET_NAME, name: 'Sleepy'},`
   - name : Pseudo voulu
-  - Réponse : `{type: 'USER_SET_NAME_SUCCESS}`
+  - Réponse : `{type: 'USER_SET_NAME_SUCCESS, name: 'Sleepy'}`
   - Erreur : `{type: 'USER_SET_NAME_FAILED', error: 'Ce pseudo est déjà pris'}`
 
 - USER_JOIN_ROOM
