@@ -6,13 +6,16 @@ import { AppComponent } from './app.component';
 import { ClankGameComponent } from './clank-game/clank-game.component';
 
 import { BoardService } from './services/board.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IntroComponent } from './intro/intro.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClankGameComponent
+    ClankGameComponent,
+    IntroComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
   providers: [BoardService],
   bootstrap: [AppComponent],
 })
