@@ -25,4 +25,12 @@ export class UserComponent implements OnInit {
     this.userService.setPseudo(this.pseudo);
   }
 
+  createRoom (): void {
+    this.userService.createRoom();
+  }
+
+  joinRoom (roomId: string): void {
+    this.userService.joinRoom(roomId);
+  }
+
 }

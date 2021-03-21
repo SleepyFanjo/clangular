@@ -16,7 +16,7 @@
 .user__logo {
   width: 50%;
   position: absolute;
-  top: 0px;
+  top: 0;
   max-width: 220px;
   z-index: 1;
   transform: translate(0, -50%);
@@ -31,4 +31,25 @@
 .user__pseudo {
   display: inline-block;
   width: calc(100% - 100px);
+}
+
+.user__actionContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #c5c5c5;
+}
+
+.user__roomInput {
+  width: 157px;
+}
+
+.user__action {
+  flex: 1;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
 }

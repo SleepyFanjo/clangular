@@ -17,8 +17,15 @@ export class UserService {
     this.websocketService.sendMessage({type: actions.USER_SET_NAME, name: pseudo})
   }
 
+  createRoom () {
+    this.websocketService.sendMessage({type: actions.USER_CREATE_ROOM});
+  }
+
+  joinRoom (roomId: string) {
+    this.websocketService.sendMessage({type: actions.USER_JOIN_ROOM, roomId: roomId});
+  }
+
   handlePseudoSet (pseudo: string) {
-    console.log("handler");
     this.pseudo = pseudo;
     this.isPseudoSet = true;
   }

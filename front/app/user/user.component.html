@@ -8,6 +8,17 @@
       </mat-form-field>
       <button mat-raised-button color="primary" (click)="handlePseudoSet()">Okmek</button>
     </div>
-    <div *ngIf="userService.isPseudoSet">{{ userService.pseudo }}</div>
+    <div class="user__actionContainer">
+      <div class="user__action">
+        <button mat-raised-button color="primary" (click)="createRoom()" [disabled]="!userService.isPseudoSet">Créer une partie</button>
+      </div>
+      <div class="user__action">
+        <mat-form-field appearance="outline" class="user__roomInput">
+          <mat-label>Le numéro samère</mat-label>
+          <input matInput placeholder="ABCDE tu connais" [disabled]="!userService.isPseudoSet" #roomId>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="joinRoom(roomId.value)" [disabled]="!userService.isPseudoSet">Rejoindre une partie</button>
+      </div>
+    </div>
   </mat-card>
 </div>
