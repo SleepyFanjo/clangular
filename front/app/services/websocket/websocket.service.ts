@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { w3cwebsocket as WS } from 'websocket'
-import * as actions from '../../../server/consts/actions'
-import { UserService } from './user.service'
 
 declare global {
   interface Window { sendMessage: any }
@@ -12,15 +10,14 @@ declare global {
 })
 export class WebsocketService {
   connection: any;
+  onMessageHandler: Array<(event: any) => void> = [];
 
-  constructor(private userService: UserService) {
+  constructor() {
     this.connection = null;
   }
 
   connect = () => {
     this.connection = new WS('ws://localhost:8080/', 'echo-protocol');
-    // for testing purpose
-    window.sendMessage = this.sendMessage;
 
     this.connection.onmessage = this.handleMessage;
   }
@@ -30,18 +27,21 @@ export class WebsocketService {
   }
 
   handleMessage = (event: any) => {
-    console.log('message received')
+    if (!this.onMessageHandler || this.onMessageHandler.length === 0) {
+      console.error('No websocket listener set');
+      return
+    }
+
     if (typeof event.data === 'string') {
       const action  = JSON.parse(event.data);
 
-      this.handleAction(action);
+      this.onMessageHandler.forEach((handler) => {
+        handler(action);
+      })
     }
   }
 
-  handleAction = (action: any) => {
-    switch (action.type) {
-      case actions.USER_SET_NAME_SUCCESS:
-        return this.userService.handlePseudoSet(action.name);
-    }
+  setOnMessageHandler = (onMessage: (event: any) => void) => {
+    this.onMessageHandler.push(onMessage);
   }
 }
