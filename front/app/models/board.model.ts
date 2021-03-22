@@ -1,6 +1,8 @@
+import { TileModel } from './tile.model';
+
 export class BoardModel {
     
-    private tiles: Object[];
+    private tiles: TileModel[];
     private tilesAccess: [];
     private treasures: Array<any>;
     private dragonState: String;
@@ -15,5 +17,9 @@ export class BoardModel {
 
     getTilesAccess() {
         return this.tilesAccess;
+    }
+
+    setTilecanStepInProperty(idTile: number, value: boolean) {
+        this.tiles[idTile].setCanStepIn(value);
     }
 }

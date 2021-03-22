@@ -1,29 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { BoardModel } from '../models/board.model';
-import { BoardService } from '../services/board.service'
+import { PlayerModel } from '../models/player.model';
+import { BoardService } from '../services/board.service';
+import { PlayerService } from '../services/player.service';
+import { AppConstants } from '../app.constants';
 
 @Component({
   selector: 'app-clank-game',
   templateUrl: './clank-game.component.html',
   styleUrls: ['./clank-game.component.scss']
 })
-export class ClankGameComponent implements OnInit {
+export class ClankGameComponent implements OnInit, AfterViewInit {
 
-public board: BoardModel;
+  public board: BoardModel;
+  public player: PlayerModel;
 
-  constructor(private boardService: BoardService) {
+  constructor(private elementRef:ElementRef, private boardService: BoardService, private playerService: PlayerService) {
     this.createBoard();
+    this.createPlayer();
     this.board = this.getBoard();
-    console.log(this.board.getTiles());
+    this.player = this.getPlayer();
   }
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    let d0 = this.elementRef.nativeElement.querySelector('#tile_0');
+    d0.insertAdjacentHTML('beforeend', AppConstants.PAWNHTML);
+  }
+
+  selectTile(origin: number) {
+    // Need to find a way to reset when we click on the tile again... Or somewhere else, i don't know
+    this.canAccessTo(origin);
   }
 
   canAccessTo(origin: number) {
-    console.log(origin);
-    console.log(this.boardService.canAccessTo(origin));
+    this.boardService.resetCanStepIn();
+    this.boardService.canAccessTo(origin);
+    if (origin === this.player.getPosition())
+    {
+      console.log("Le joueur est sur cette case !");
+    } else {
+      if (this.boardService.canAccessToTile(origin, this.player.getPosition())) {
+        let currentPosition = this.elementRef.nativeElement.querySelector('#tile_'+this.player.getPosition()+' .pawn');
+        currentPosition.remove();
+        this.player.setPosition(origin);
+        let futurPosition = this.elementRef.nativeElement.querySelector('#tile_'+origin);
+        futurPosition.insertAdjacentHTML('beforeend', AppConstants.PAWNHTML);
+      }
+    }
+  }
+
+  resetBoardAccess() {
+    this.boardService.resetCanStepIn();
   }
 
   createBoard(): ClankGameComponent {
@@ -33,5 +62,14 @@ public board: BoardModel;
 
   getBoard(): BoardModel {
     return this.boardService.getBoard();
+  }
+
+  createPlayer(): ClankGameComponent {
+    this.playerService.initPlayer();
+    return this;
+  }
+
+  getPlayer(): PlayerModel {
+    return this.playerService.getPlayer();
   }
 }

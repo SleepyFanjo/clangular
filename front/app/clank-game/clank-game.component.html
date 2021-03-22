@@ -1,10 +1,12 @@
 <p>clank-game works!</p>
+<div>The player {{player.getPseudo()}} is now playing and he's on tile number {{player.getPosition()}}</div>
 <div>Let's try to print the board shall we ?!</div>
-<div *ngFor="let row of board.getTiles(); let i = index">
-    <div *ngFor="let col of row; let j = index" class="inline box" (click)="canAccessTo(col)">
-        {{col}}
+<div id="clank-board">
+    <div *ngFor="let row of board.getTiles(); let i = index" [ngClass]="{tile: true, canStep: row.canStepIn}" (click)="selectTile(row.value)" id="tile_{{i}}">
+        {{row.value}}
     </div>
 </div>
+<div>This is the tiles</div>
 
 <div>And the access matrix associated</div>
 <div *ngFor="let row of board.getTilesAccess(); let i = index">

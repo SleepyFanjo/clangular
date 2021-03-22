@@ -1,9 +1,80 @@
-.inline {
-    display: inline-block;
+#clank-board {
+    border: 1px solid blue;
+    height: 1200px;
+    width: 1200px;
+    background-image: url('../../assets/Clank_board.jpg');
+    background-size: contain;
+}
+
+#tile_0 {
+    border: 1px solid red;
+    position: relative;
+    left: 25px;
+    width: 140px;
+    height: 100px;
+}
+
+#tile_1 {
+    border: 1px solid red;
+    position: relative;
+    left: 25px;
+    top: 22px;
+    width: 98px;
+    height: 75px;
+}
+
+#tile_2 {
+    border: 1px solid red;
+    position: relative;
+    left: 200px;
+    top: -55px;
+    width: 100px;
+    height: 78px;
+}
+
+#tile_3 {
+    border: 1px solid red;
+    position: relative;
+    left: 370px;
+    top: -130px;
+    width: 95px;
+    height: 75px;
+}
+
+.tile:hover {
+    cursor: pointer;
+}
+
+::ng-deep .pawn {
+    content:'';
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    background-color: blueviolet;
+    transform: translate(50%, 50%);
+}
+
+::ng-deep .pawn::before {
+    content: '';
+    display: block;
+    height: 15px;
+    width: 15px;
+    background-color: blueviolet;
+    border-radius: 50%;
+    position: relative;
+    top: -15px;
+}
+
+.canStep {
+    background-color: aqua;
 }
 
 .box {
     border: 1px solid black;
     height: 50px;
     width: 50px;
+}
+
+.inline {
+    display: inline-block;
 }

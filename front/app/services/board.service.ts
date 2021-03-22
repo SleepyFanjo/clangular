@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BoardModel } from '../models/board.model';
+import { AppConstants } from '../app.constants';
 
 @Injectable({
     providedIn: 'root'
@@ -9,20 +10,9 @@ export class BoardService {
     board: BoardModel;
 
     createBoard(): BoardService {
-        let tiles = [
-            [0,1,2,3]
-        ];
-
-        let tilesAccess = [ //   |0|1|2|3|
-            [0,1,0,0],      //  0|0|1|0|0|
-            [1,0,1,0],      //  1|1|0|1|0|
-            [0,1,0,1],      //  2|0|1|0|1|
-            [0,1,1,0]       //  3|0|1|1|0|
-        ];
-
         let board = new BoardModel({
-            tiles: tiles,
-            tilesAccess: tilesAccess,
+            tiles: AppConstants.BASIC_FIELD,
+            tilesAccess: AppConstants.BASIC_FIELD_ACCESS_MATRIX,
             treasures: [],
             dragonState: 'sleeping'
         });
@@ -43,10 +33,21 @@ export class BoardService {
 
         for (let index = 0; index < matrix[origin].length; index++) {
             if (matrix[origin][index] === 1) {
-                result.push(index);
+                result.push(this.board.getTiles()[index]);
+                this.board.setTilecanStepInProperty(index, true);
             }        
         }
 
         return result;
+    }
+
+    canAccessToTile(origin: number, playerPosition: number): boolean {
+        return this.board.getTilesAccess()[origin][playerPosition] === 1;
+    }
+
+    resetCanStepIn(): void {
+        for (let index = 0; index < this.board.getTiles().length; index++) {
+            this.board.setTilecanStepInProperty(index, false);
+        }
     }
 }
