@@ -1,6 +1,9 @@
 import { TileModel } from './models/tile.model';
 
 export class AppConstants {
+
+    public static PAWNHTML = '<div class="pawn"></div>';
+
     public static CAN_PASS = 1;
     public static TUNNEL_BOOT = 2;
     public static TUNNEL_KEY = 3;
