@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +12,9 @@ import { BoardService } from './services/board.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IntroComponent } from './intro/intro.component';
 import { UserComponent } from './user/user.component';
+import { UserService } from './services/user/user.service';
+import { RoomService } from './services/room/room.service';
+import { RoomComponent } from './room/room.component';
 
 @NgModule({
   declarations: [
@@ -19,9 +22,10 @@ import { UserComponent } from './user/user.component';
     ClankGameComponent,
     IntroComponent,
     UserComponent,
+    RoomComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
-  providers: [BoardService],
+  providers: [BoardService, {provide: APP_INITIALIZER, multi: true, deps: [UserService, RoomService], useFactory: (myService) => () => null}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

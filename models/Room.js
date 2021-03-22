@@ -2,11 +2,16 @@ const Game = require("./game");
 const { randomCapitalString } = require("../server/utils/random");
 
 class Room {
-  constructor() {
+  constructor(admin) {
     this.id = randomCapitalString(5);
     this.users = [];
     this.game = new Game();
+    this.admin = admin;
   }
+
+  isUserAdmin = (user) => {
+    return user === this.admin;
+  };
 
   addUser = (user) => {
     this.users.push(user);
@@ -20,6 +25,23 @@ class Room {
 
   hasUser = (user) => {
     return this.users.find((u) => u.connection === user.connection);
+  };
+
+  notifyUsers = (sendMessageToUser, action) => {
+    const usersName = this.users.map((u) => u.name);
+
+    // Notify users
+    this.users.forEach((u) => {
+      sendMessageToUser(
+        {
+          type: action,
+          roomId: this.id,
+          users: usersName,
+          isAdmin: this.isUserAdmin(u),
+        },
+        u
+      );
+    });
   };
 }
 

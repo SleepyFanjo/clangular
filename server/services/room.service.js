@@ -1,20 +1,32 @@
 const Room = require("../../models/Room");
 const actions = require("../consts/actions");
+const messageService = require("./message.service");
 
 class RoomService {
   constructor() {
     this.rooms = [];
+    messageService.setOnMessageHandler(this.handleAction);
   }
+  handleAction = (message, user) => {
+    switch (message.type) {
+      case actions.USER_JOIN_ROOM:
+        return this.joinRoom(user, message.roomId);
+      case actions.USER_CREATE_ROOM:
+        return this.createRoom(user);
+    }
+  };
 
   createRoom = (user) => {
-    const room = new Room();
+    const room = new Room(user);
     room.addUser(user);
 
     this.rooms.push(room);
 
     return {
-      type: actions.USER_CREATED_ROOM,
+      type: actions.USER_JOINED_ROOM,
       roomId: room.id,
+      users: [user.name],
+      isAdmin: true,
     };
   };
 
@@ -29,11 +41,10 @@ class RoomService {
     }
 
     room.addUser(user);
-
-    return {
-      type: actions.USER_JOINED_ROOM,
-      users: room.users.map((u) => u.name),
-    };
+    room.notifyUsers(
+      messageService.sendMessageToUser,
+      actions.USER_JOINED_ROOM
+    );
   };
 
   leaveRoom = (user) => {
@@ -47,7 +58,13 @@ class RoomService {
 
     if (usersCount <= 0) {
       this.clearRoom(room);
+      return;
     }
+
+    room.notifyUsers(
+      messageService.sendMessageToUser,
+      actions.USER_JOINED_ROOM
+    );
   };
 
   clearRoom = (room) => {

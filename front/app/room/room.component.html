@@ -1,0 +1,8 @@
+<div class="room">
+  <img src="./assets/logo.png" class="room__logo" />
+  <mat-card class="room__card">
+    <div *ngFor="let user of roomService.users">
+      {{ user }}
+    </div>
+  </mat-card>
+</div>
