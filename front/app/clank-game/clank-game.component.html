@@ -1,4 +1,5 @@
 <p>clank-game works!</p>
+<div>The player {{player.getPseudo()}} is now playing and he's on tile number {{player.getPosition()}}</div>
 <div>Let's try to print the board shall we ?!</div>
 <div id="clank-board">
     <div *ngFor="let row of board.getTiles(); let i = index" [ngClass]="{tile: true, canStep: row.canStepIn}" (click)="selectTile(row.value)" id="tile_{{i}}">

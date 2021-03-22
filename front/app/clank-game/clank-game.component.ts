@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardModel } from '../models/board.model';
-import { BoardService } from '../services/board.service'
+import { PlayerModel } from '../models/player.model';
+import { BoardService } from '../services/board.service';
+import { PlayerService } from '../services/player.service';
 
 @Component({
   selector: 'app-clank-game',
@@ -9,11 +11,14 @@ import { BoardService } from '../services/board.service'
 })
 export class ClankGameComponent implements OnInit {
 
-public board: BoardModel;
+  public board: BoardModel;
+  public player: PlayerModel;
 
-  constructor(private boardService: BoardService) {
+  constructor(private boardService: BoardService, private playerService: PlayerService) {
     this.createBoard();
+    this.createPlayer();
     this.board = this.getBoard();
+    this.player = this.getPlayer();
   }
 
   ngOnInit(): void {
@@ -28,6 +33,14 @@ public board: BoardModel;
   canAccessTo(origin: number) {
     this.boardService.resetCanStepIn();
     this.boardService.canAccessTo(origin);
+    if (origin === this.player.getPosition())
+    {
+      console.log("Le joueur est sur cette case !");
+    } else {
+      if (this.boardService.canAccessToTile(origin, this.player.getPosition())) {
+        this.player.setPosition(origin);
+      }
+    }
   }
 
   resetBoardAccess() {
@@ -41,5 +54,14 @@ public board: BoardModel;
 
   getBoard(): BoardModel {
     return this.boardService.getBoard();
+  }
+
+  createPlayer(): ClankGameComponent {
+    this.playerService.initPlayer();
+    return this;
+  }
+
+  getPlayer(): PlayerModel {
+    return this.playerService.getPlayer();
   }
 }

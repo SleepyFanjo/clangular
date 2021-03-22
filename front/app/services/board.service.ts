@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BoardModel } from '../models/board.model';
-import { TileModel } from '../models/tile.model';
 import { AppConstants } from '../app.constants';
 
 @Injectable({
@@ -40,6 +39,10 @@ export class BoardService {
         }
 
         return result;
+    }
+
+    canAccessToTile(origin: number, playerPosition: number): boolean {
+        return this.board.getTilesAccess()[origin][playerPosition] === 1;
     }
 
     resetCanStepIn(): void {
