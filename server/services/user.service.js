@@ -20,7 +20,7 @@ class UserService {
     if (!this.userExist(name)) {
       user.name = name;
 
-      return { type: actions.USER_SET_NAME_SUCCESS };
+      return { type: actions.USER_SET_NAME_SUCCESS, name: name };
     }
 
     return {
@@ -35,8 +35,6 @@ class UserService {
         const result = this.handleUserSetName(user, message.name);
         user.connection.sendUTF(JSON.stringify(result));
         break;
-      default:
-        user.connection.sendUTF(JSON.stringify({ type: "UNAUTHORIZED" }));
     }
   };
 

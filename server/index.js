@@ -47,6 +47,7 @@ wsServer.on("request", function (request) {
 
   connection.on("message", function (message) {
     if (message.type === "utf8" && user.name) {
+      userService.handleMessage(JSON.parse(message.utf8Data), user);
       messageService.handleMessage(JSON.parse(message.utf8Data), user);
     } else if (message.type === "utf8") {
       userService.handleMessage(JSON.parse(message.utf8Data), user);
