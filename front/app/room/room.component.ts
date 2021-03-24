@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RoomService } from '../services/room/room.service';
 
 @Component({
@@ -9,11 +10,14 @@ import { RoomService } from '../services/room/room.service';
 export class RoomComponent implements OnInit {
   roomService: any;
 
-  constructor(roomService: RoomService) {
+  constructor(roomService: RoomService, private router: Router) {
     this.roomService = roomService;
   }
 
   ngOnInit(): void {
   }
 
+  startGame () {
+    this.router.navigate(['/clank'])
+  }
 }

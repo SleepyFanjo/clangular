@@ -1,8 +1,18 @@
-<div class="room">
-  <img src="./assets/logo.png" class="room__logo" />
-  <mat-card class="room__card">
+<app-intro>
+    <div class="room_id">
+      Id Salle : {{ roomService.roomId }}
+    </div>
     <div *ngFor="let user of roomService.users">
       {{ user }}
     </div>
-  </mat-card>
-</div>
+    <div class="room__action">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="startGame()"
+        [disabled]="!roomService.isAdmin"
+      >
+        {{ roomService.isAdmin ? 'Demarrer la partie' : 'En attente de l\'admin' }}
+      </button>
+    </div>
+</app-intro>
